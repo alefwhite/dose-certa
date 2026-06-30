@@ -101,20 +101,66 @@
                     </div>
                 </div>
 
-                <!-- Step 2: Frequência Diária -->
+                <!-- Step 2: Esquema de Frequência -->
                 <div class="form-group">
-                    <label for="frequency" class="group-label">2. Frequência Diária <span class="required">*</span></label>
-                    <p class="group-desc">Quantas vezes ao dia você toma essa dose?</p>
+                    <label class="group-label">2. Esquema de Frequência <span class="required">*</span></label>
+                    <p class="group-desc">Selecione como o medicamento é administrado:</p>
                     
-                    <div class="input-controls">
-                        <div class="stepper-wrapper">
-                            <button type="button" class="stepper-btn btn-minus" id="freq-minus" aria-label="Diminuir frequência">—</button>
-                            <input type="number" id="frequency" name="frequency" min="1" max="24" value="1" step="1" required class="stepper-input">
-                            <button type="button" class="stepper-btn btn-plus" id="freq-plus" aria-label="Aumentar frequência">+</button>
-                        </div>
-                        <span class="input-suffix">vezes por dia</span>
+                    <!-- Seletor de esquema de horário -->
+                    <div class="schedule-selector" role="radiogroup" aria-label="Esquema de frequência">
+                        <button type="button" class="schedule-btn active" data-schedule="once" role="radio" aria-checked="true" id="sched-once">
+                            <span>1x ao dia <small>Dose Única</small></span>
+                        </button>
+                        <button type="button" class="schedule-btn" data-schedule="twice" role="radio" aria-checked="false" id="sched-twice">
+                            <span>2x ao dia <small>Manhã/Noite</small></span>
+                        </button>
+                        <button type="button" class="schedule-btn" data-schedule="hours" role="radio" aria-checked="false" id="sched-hours">
+                            <span>Por intervalo <small>De X em X horas</small></span>
+                        </button>
+                        <button type="button" class="schedule-btn" data-schedule="manual" role="radio" aria-checked="false" id="sched-manual">
+                            <span>Personalizado <small>Manual</small></span>
+                        </button>
                     </div>
-                    <div class="error-message" id="error-frequency" aria-live="polite"></div>
+
+                    <!-- Input condicional para intervalo de horas -->
+                    <div id="hours-interval-wrapper" class="sub-form-group hidden-field">
+                        <label for="medication-interval" class="sub-label">De quantas em quantas horas?</label>
+                        <div class="input-controls sub-input-controls">
+                            <input type="number" id="medication-interval" min="1" max="24" placeholder="Ex: 8" class="text-input text-input-short" autocomplete="off">
+                            <span class="input-suffix">horas</span>
+                        </div>
+                        <div class="error-message" id="error-interval" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Frequência diária resultante (stepper) -->
+                    <div class="frequency-result-wrapper">
+                        <label for="frequency" class="sub-label">Frequência diária:</label>
+                        <div class="input-controls">
+                            <div class="stepper-wrapper">
+                                <button type="button" class="stepper-btn btn-minus" id="freq-minus" aria-label="Diminuir frequência">—</button>
+                                <input type="number" id="frequency" name="frequency" min="1" max="24" value="1" step="1" required class="stepper-input">
+                                <button type="button" class="stepper-btn btn-plus" id="freq-plus" aria-label="Aumentar frequência">+</button>
+                            </div>
+                            <span class="input-suffix" id="frequency-suffix">vez por dia</span>
+                        </div>
+                        <div class="error-message" id="error-frequency" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Horário de Início sugerido -->
+                    <div class="time-suggester-wrapper">
+                        <label for="start-time" class="sub-label">Horário de início (1ª dose):</label>
+                        <div class="input-controls">
+                            <input type="time" id="start-time" value="08:00" class="text-input text-input-time" style="max-width: 140px;">
+                        </div>
+                    </div>
+
+                    <!-- Pré-visualização de tomadas (próximas 24h) -->
+                    <div id="schedule-preview-wrapper" class="sub-form-group schedule-preview-box">
+                        <span class="sub-label">Horários das tomadas (próximas 24h):</span>
+                        <div id="schedule-preview-list" class="schedule-preview-list">
+                            <!-- Injetado via JavaScript -->
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Step 3: Duração -->
@@ -136,7 +182,7 @@
                 <!-- Optional Treatment Info -->
                 <div class="optional-info-toggle">
                     <button type="button" id="btn-toggle-optional" class="toggle-link" aria-expanded="false" aria-controls="optional-info-fields">
-                        + Adicionar detalhes (Paciente / Medicamento / Horário)
+                        + Adicionar detalhes (Paciente / Medicamento)
                     </button>
                 </div>
                 
@@ -144,17 +190,24 @@
                     <div class="form-row">
                         <div class="form-group-sub">
                             <label for="patient-name" class="sub-label">Nome do Paciente</label>
-                            <input type="text" id="patient-name" placeholder="Ex: João da Silva" class="text-input" autocomplete="off">
+                            <input type="text" id="patient-name" placeholder="Ex: João ou Rex" class="text-input" autocomplete="off">
+                        </div>
+                        <div class="form-group-sub">
+                            <label class="sub-label">Tipo de Paciente</label>
+                            <div class="patient-type-selector" role="radiogroup" aria-label="Tipo de paciente">
+                                <button type="button" class="patient-type-btn active" data-type="human" role="radio" aria-checked="true" id="pat-human">
+                                    <span>👤 Humano</span>
+                                </button>
+                                <button type="button" class="patient-type-btn" data-type="pet" role="radio" aria-checked="false" id="pat-pet">
+                                    <span>🐾 Pet</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row" style="margin-top: 0.75rem;">
                         <div class="form-group-sub">
                             <label for="medication-name" class="sub-label">Nome do Medicamento</label>
                             <input type="text" id="medication-name" placeholder="Ex: Amoxicilina 500mg" class="text-input" autocomplete="off">
-                        </div>
-                        <div class="form-group-sub">
-                            <label for="medication-interval" class="sub-label">De quantas em quantas horas</label>
-                            <input type="number" id="medication-interval" min="1" placeholder="Ex: 8" class="text-input" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -184,6 +237,7 @@
                         <div class="print-row" id="print-patient-row"><span class="print-label">Paciente:</span> <span id="print-patient-val" class="print-val"></span></div>
                         <div class="print-row" id="print-medication-row"><span class="print-label">Medicamento:</span> <span id="print-medication-val" class="print-val"></span></div>
                         <div class="print-row"><span class="print-label">Prescrição:</span> <span id="print-prescription-val" class="print-val"></span></div>
+                        <div class="print-row" id="print-schedule-row"><span class="print-label">Cronograma Recomendado (Próximas 24h):</span> <span id="print-schedule-val" class="print-val"></span></div>
                     </div>
                     
                     <div class="result-box rounded-box">
@@ -195,6 +249,14 @@
                     <div class="result-details">
                         <p>Total exato necessário: <strong id="result-exact">0.0</strong> comprimidos</p>
                         <p class="helper-text" id="result-helper-msg"></p>
+                    </div>
+
+                    <div class="result-schedule-wrapper rounded-box">
+                        <div class="result-label">Cronograma Recomendado (Próximas 24h)</div>
+                        <div id="result-schedule-list" class="result-schedule-list">
+                            <!-- Injetado via JavaScript -->
+                        </div>
+                        <p class="helper-text" id="result-schedule-helper" style="text-align: center; margin-top: 0.5rem; font-size: 0.8rem;"></p>
                     </div>
 
                     <div class="results-actions">

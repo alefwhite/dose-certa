@@ -401,6 +401,253 @@ body {
     background: var(--error-light);
 }
 
+.text-input.invalid {
+    border-color: var(--error-color);
+    background: var(--error-light);
+}
+
+/* Schedule Selector Styles */
+.schedule-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.schedule-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(226, 232, 240, 0.8);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 0.5rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    outline: none;
+    text-align: center;
+}
+
+.schedule-btn span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.schedule-btn span small {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.schedule-btn:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px -6px rgba(15, 23, 42, 0.05);
+}
+
+.schedule-btn.active {
+    background: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 20px -8px rgba(14, 165, 233, 0.2);
+    transform: scale(1.02);
+}
+
+.schedule-btn.active span {
+    color: var(--primary-color);
+}
+
+.schedule-btn.active span small {
+    color: var(--primary-color);
+    opacity: 0.8;
+}
+
+/* Sub-form groups */
+.sub-form-group {
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.sub-input-controls {
+    max-width: 200px;
+}
+
+.text-input-short {
+    text-align: center;
+    font-weight: 600;
+}
+
+.frequency-result-wrapper {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border-color);
+}
+
+.hidden-field {
+    display: none !important;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Time Suggester and Schedule Preview styles */
+.time-suggester-wrapper {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.text-input-time {
+    font-family: var(--font-title);
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.schedule-preview-box {
+    margin-top: 0.75rem;
+    background: rgba(14, 165, 233, 0.03);
+    border: 1px dashed rgba(14, 165, 233, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+}
+
+.schedule-preview-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+}
+
+.time-pill {
+    background: white;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.03);
+    transition: var(--transition-smooth);
+}
+
+.time-pill:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(15, 23, 42, 0.06);
+}
+
+.time-pill.night-dose {
+    border-color: #f59e0b;
+    background: #fffbeb;
+    color: #d97706;
+}
+
+.time-pill.night-dose::after {
+    content: "🌙";
+    font-size: 0.8rem;
+}
+
+/* Patient Type Selector */
+.patient-type-selector {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.patient-type-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.5rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    outline: none;
+}
+
+.patient-type-btn span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.patient-type-btn:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: #cbd5e1;
+}
+
+.patient-type-btn.active {
+    background: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px -4px rgba(14, 165, 233, 0.25);
+}
+
+.patient-type-btn.active span {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Results schedule card */
+.result-schedule-wrapper {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.8));
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.result-schedule-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.result-schedule-list .time-pill {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+
 /* 5. Buttons Styling */
 .action-buttons {
     display: flex;
@@ -835,6 +1082,10 @@ body {
     
     .fraction-btn {
         padding: 1.25rem 0.5rem;
+    }
+
+    .schedule-selector {
+        grid-template-columns: repeat(4, 1fr);
     }
     
     .form-row {
