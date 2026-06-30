@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dose Certa - Calculadora de Comprimidos</title>
+    <meta name="description" content="Calcule a quantidade exata de comprimidos e embalagens necessárias para o seu tratamento médico de forma simples e rápida.">
+    <!-- Google Fonts: Outfit for titles, Inter for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-decorations">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <main class="app-container">
+        <header class="app-header">
+            <div class="logo-wrapper">
+                <svg viewBox="0 0 100 100" class="logo-svg" aria-hidden="true">
+                    <rect x="20" y="35" width="60" height="30" rx="15" class="pill-outline" />
+                    <path d="M50 35 V65" class="pill-line" />
+                    <circle cx="35" cy="50" r="6" class="pill-dot" />
+                </svg>
+            </div>
+            <h1>Dose Certa</h1>
+            <p class="subtitle">Planeje seu tratamento sem complicações</p>
+        </header>
+
+        <section class="calculator-card">
+            <form id="calc-form" novalidate>
+                <!-- Step 1: Dose por Tomada -->
+                <div class="form-group">
+                    <label class="group-label">1. Dose por Tomada <span class="required">*</span></label>
+                    <p class="group-desc">Selecione a fração do comprimido recomendada pelo seu médico.</p>
+                    
+                    <div class="fraction-grid" role="radiogroup" aria-label="Fração do comprimido">
+                        <!-- Option 1: Inteiro -->
+                        <button type="button" class="fraction-btn active" data-value="1.0" role="radio" aria-checked="true" id="fraction-1">
+                            <div class="pill-preview-svg">
+                                <svg viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" class="pill-bg" />
+                                    <!-- Full pill split line -->
+                                    <line x1="20" y1="4" x2="20" y2="36" class="pill-divide" />
+                                    <!-- Colored parts: all filled -->
+                                    <path d="M20,4 A16,16 0 0,1 20,36 A16,16 0 0,1 20,4 Z" class="pill-fill" />
+                                </svg>
+                            </div>
+                            <span class="fraction-text">Inteiro</span>
+                            <span class="fraction-num">1.0</span>
+                        </button>
+
+                        <!-- Option 2: 3/4 -->
+                        <button type="button" class="fraction-btn" data-value="0.75" role="radio" aria-checked="false" id="fraction-075">
+                            <div class="pill-preview-svg">
+                                <svg viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" class="pill-bg" />
+                                    <line x1="20" y1="4" x2="20" y2="36" class="pill-divide" />
+                                    <line x1="4" y1="20" x2="36" y2="20" class="pill-divide" />
+                                    <!-- Filled parts: 3 quadrants -->
+                                    <path d="M20,4 A16,16 0 1,1 4,20 L20,20 Z" class="pill-fill" />
+                                </svg>
+                            </div>
+                            <span class="fraction-text">3/4 de Compr.</span>
+                            <span class="fraction-num">0.75</span>
+                        </button>
+
+                        <!-- Option 3: Metade -->
+                        <button type="button" class="fraction-btn" data-value="0.5" role="radio" aria-checked="false" id="fraction-05">
+                            <div class="pill-preview-svg">
+                                <svg viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" class="pill-bg" />
+                                    <line x1="20" y1="4" x2="20" y2="36" class="pill-divide" />
+                                    <!-- Filled parts: right half filled -->
+                                    <path d="M20,4 A16,16 0 0,1 20,36 Z" class="pill-fill" />
+                                </svg>
+                            </div>
+                            <span class="fraction-text">Metade (1/2)</span>
+                            <span class="fraction-num">0.5</span>
+                        </button>
+
+                        <!-- Option 4: 1/4 -->
+                        <button type="button" class="fraction-btn" data-value="0.25" role="radio" aria-checked="false" id="fraction-025">
+                            <div class="pill-preview-svg">
+                                <svg viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" class="pill-bg" />
+                                    <line x1="20" y1="4" x2="20" y2="36" class="pill-divide" />
+                                    <line x1="4" y1="20" x2="36" y2="20" class="pill-divide" />
+                                    <!-- Filled parts: top-right quadrant -->
+                                    <path d="M20,4 A16,16 0 0,1 36,20 L20,20 Z" class="pill-fill" />
+                                </svg>
+                            </div>
+                            <span class="fraction-text">1/4 de Compr.</span>
+                            <span class="fraction-num">0.25</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Frequência Diária -->
+                <div class="form-group">
+                    <label for="frequency" class="group-label">2. Frequência Diária <span class="required">*</span></label>
+                    <p class="group-desc">Quantas vezes ao dia você toma essa dose?</p>
+                    
+                    <div class="input-controls">
+                        <div class="stepper-wrapper">
+                            <button type="button" class="stepper-btn btn-minus" id="freq-minus" aria-label="Diminuir frequência">—</button>
+                            <input type="number" id="frequency" name="frequency" min="1" max="24" value="1" step="1" required class="stepper-input">
+                            <button type="button" class="stepper-btn btn-plus" id="freq-plus" aria-label="Aumentar frequência">+</button>
+                        </div>
+                        <span class="input-suffix">vezes por dia</span>
+                    </div>
+                    <div class="error-message" id="error-frequency" aria-live="polite"></div>
+                </div>
+
+                <!-- Step 3: Duração -->
+                <div class="form-group">
+                    <label for="duration" class="group-label">3. Duração do Tratamento <span class="required">*</span></label>
+                    <p class="group-desc">Por quantos dias durará o tratamento?</p>
+                    
+                    <div class="input-controls">
+                        <div class="stepper-wrapper">
+                            <button type="button" class="stepper-btn btn-minus" id="dur-minus" aria-label="Diminuir duração">—</button>
+                            <input type="number" id="duration" name="duration" min="1" max="365" value="7" step="1" required class="stepper-input">
+                            <button type="button" class="stepper-btn btn-plus" id="dur-plus" aria-label="Aumentar duração">+</button>
+                        </div>
+                        <span class="input-suffix">dias</span>
+                    </div>
+                    <div class="error-message" id="error-duration" aria-live="polite"></div>
+                </div>
+
+                <!-- Optional Treatment Info -->
+                <div class="optional-info-toggle">
+                    <button type="button" id="btn-toggle-optional" class="toggle-link" aria-expanded="false" aria-controls="optional-info-fields">
+                        + Adicionar detalhes (Paciente / Medicamento)
+                    </button>
+                </div>
+                
+                <div id="optional-info-fields" class="optional-fields hidden">
+                    <div class="form-row">
+                        <div class="form-group-sub">
+                            <label for="patient-name" class="sub-label">Nome do Paciente</label>
+                            <input type="text" id="patient-name" placeholder="Ex: João da Silva" class="text-input" autocomplete="off">
+                        </div>
+                        <div class="form-group-sub">
+                            <label for="medication-name" class="sub-label">Nome do Medicamento</label>
+                            <input type="text" id="medication-name" placeholder="Ex: Amoxicilina 500mg" class="text-input" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="action-buttons">
+                    <button type="submit" id="btn-calculate" class="btn btn-primary">
+                        <span>Calcular Dose</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v8" />
+                            <path d="M8 12h8" />
+                        </svg>
+                    </button>
+                    <button type="button" id="btn-clear" class="btn btn-secondary">Limpar</button>
+                </div>
+            </form>
+
+            <!-- Results Display -->
+            <div id="results-panel" class="results-panel hidden" aria-live="assertive">
+                <div class="divider"></div>
+                <div class="results-content">
+                    <h2 class="results-title">Resultado do Tratamento</h2>
+                    
+                    <!-- Print Only Text Summary -->
+                    <div class="print-only-summary" aria-hidden="true">
+                        <div class="print-row" id="print-patient-row"><span class="print-label">Paciente:</span> <span id="print-patient-val" class="print-val"></span></div>
+                        <div class="print-row" id="print-medication-row"><span class="print-label">Medicamento:</span> <span id="print-medication-val" class="print-val"></span></div>
+                        <div class="print-row"><span class="print-label">Prescrição:</span> <span id="print-prescription-val" class="print-val"></span></div>
+                    </div>
+                    
+                    <div class="result-box rounded-box">
+                        <div class="result-label">Para comprar (inteiros):</div>
+                        <div class="result-value" id="result-rounded">0</div>
+                        <div class="result-sub-label">Comprimidos Inteiros</div>
+                    </div>
+
+                    <div class="result-details">
+                        <p>Total exato necessário: <strong id="result-exact">0.0</strong> comprimidos</p>
+                        <p class="helper-text" id="result-helper-msg"></p>
+                    </div>
+
+                    <div class="results-actions">
+                        <button type="button" id="btn-share-whatsapp" class="btn btn-whatsapp">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.37 5.054L2 22l5.077-1.33a9.92 9.92 0 004.93 1.302h.004c5.505 0 9.988-4.478 9.99-9.984a9.97 9.97 0 00-2.927-7.065A9.92 9.92 0 0012.012 2zm5.728 14.159c-.25.706-1.464 1.282-2.022 1.365-.502.075-1.161.127-3.328-.771-2.772-1.149-4.549-3.987-4.688-4.173-.138-.186-1.125-1.499-1.125-2.861 0-1.361.71-2.028.96-2.302.25-.274.551-.343.735-.343h.523c.168 0 .393-.063.615.474.225.547.771 1.884.838 2.022.067.137.112.297.021.479-.092.183-.138.297-.274.456-.137.16-.289.356-.413.479-.138.138-.282.289-.122.564.16.274.71 1.171 1.523 1.895.834.743 1.539.971 1.761 1.085.222.115.351.097.48-.052.129-.148.552-.64.7-.857.147-.217.294-.183.498-.103.203.079 1.293.611 1.517.725.225.114.375.172.43.269.056.097.056.559-.194 1.265z"/>
+                            </svg>
+                            <span>WhatsApp</span>
+                        </button>
+                        <button type="button" id="btn-export-pdf" class="btn btn-pdf">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <polyline points="10 9 9 9 8 9" />
+                            </svg>
+                            <span>Salvar PDF</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 Dose Certa. Uso informativo. Sempre consulte seu médico ou farmacêutico.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
