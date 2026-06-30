@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const optionalInfoFields = document.getElementById('optional-info-fields');
     const patientInput = document.getElementById('patient-name');
     const medicationInput = document.getElementById('medication-name');
+    const medicationIntervalInput = document.getElementById('medication-interval');
 
     const btnClear = document.getElementById('btn-clear');
     
@@ -94,6 +95,15 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.textContent = '';
     };
 
+    // --- Helper to format hours interval ---
+    const formatInterval = (val) => {
+        const raw = val.trim();
+        if (!raw) return '';
+        const hours = parseInt(raw, 10);
+        if (isNaN(hours) || hours <= 0) return '';
+        return `${hours} em ${hours} ${hours === 1 ? 'hora' : 'horas'}`;
+    };
+
     // --- Calculation Logic ---
     const calculateDose = () => {
         if (!validateInputs()) {
@@ -126,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Populate Print Only Text Summary
         const patient = patientInput.value.trim();
         const medication = medicationInput.value.trim();
+        const interval = formatInterval(medicationIntervalInput.value);
         
         const printPatientRow = document.getElementById('print-patient-row');
         const printMedicationRow = document.getElementById('print-medication-row');
@@ -141,7 +152,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (medication) {
-            printMedicationVal.textContent = medication;
+            let medText = medication;
+            if (interval) {
+                medText += ` (${interval})`;
+            }
+            printMedicationVal.textContent = medText;
+            printMedicationRow.style.display = 'block';
+        } else if (interval) {
+            printMedicationVal.textContent = `De ${interval}`;
             printMedicationRow.style.display = 'block';
         } else {
             printMedicationRow.style.display = 'none';
@@ -154,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         printPrescriptionVal.innerHTML = `
             • Dose por tomada: <strong>${fractionText}</strong><br>
-            • Frequência: <strong>${frequency} ${frequency > 1 ? 'vezes' : 'vez'} ao dia</strong><br>
+            • Frequência: <strong>${frequency} ${frequency > 1 ? 'vezes' : 'vez'} ao dia${interval ? ` (${interval})` : ''}</strong><br>
             • Duração do tratamento: <strong>${duration} ${duration > 1 ? 'dias' : 'dia'}</strong><br>
             • Total exato necessário: <strong>${resultExact.textContent} comprimidos</strong>
         `;
@@ -211,8 +229,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isHidden = optionalInfoFields.classList.toggle('hidden');
         btnToggleOptional.setAttribute('aria-expanded', !isHidden);
         btnToggleOptional.textContent = isHidden 
-            ? '+ Adicionar detalhes (Paciente / Medicamento)' 
-            : '— Ocultar detalhes (Paciente / Medicamento)';
+            ? '+ Adicionar detalhes (Paciente / Medicamento / Horário)' 
+            : '— Ocultar detalhes (Paciente / Medicamento / Horário)';
     });
 
     // 5. Form Submit Handler
@@ -227,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnShareWhatsapp.addEventListener('click', () => {
         const patient = patientInput.value.trim();
         const medication = medicationInput.value.trim();
+        const interval = formatInterval(medicationIntervalInput.value);
         const frequency = freqInput.value;
         const duration = durInput.value;
         const totalExact = resultExact.textContent;
@@ -240,11 +259,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Build WhatsApp formatted string
         let message = `💊 *Dose Certa - Planejamento de Tratamento*\n\n`;
         if (patient) message += `👤 *Paciente:* ${patient}\n`;
-        if (medication) message += `💊 *Medicamento:* ${medication}\n`;
-        if (patient || medication) message += `\n`;
+        if (medication) {
+            message += `💊 *Medicamento:* ${medication}`;
+            if (interval) message += ` (${interval})`;
+            message += `\n`;
+        } else if (interval) {
+            message += `⏱️ *Intervalo:* ${interval}\n`;
+        }
+        if (patient || medication || interval) message += `\n`;
         
         message += `• *Dose por tomada:* ${fractionText} comprimido\n`;
-        message += `• *Frequência:* ${frequency}x ao dia\n`;
+        message += `• *Frequência:* ${frequency}x ao dia${interval ? ` (${interval})` : ''}\n`;
         message += `• *Duração do Tratamento:* ${duration} dias\n\n`;
         message += `📊 *Total necessário:* ${totalExact} comprimidos exatos\n`;
         message += `📦 *Comprar:* ${totalRounded} comprimidos inteiros\n\n`;
@@ -266,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
         durInput.value = 7;
         patientInput.value = '';
         medicationInput.value = '';
+        medicationIntervalInput.value = '';
         
         // Reset selected fraction to "Inteiro" (1.0)
         fractionBtns.forEach(b => {
@@ -282,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset optional toggle fields
         optionalInfoFields.classList.add('hidden');
         optionalInfoFields.classList.remove('empty-print');
-        btnToggleOptional.textContent = '+ Adicionar detalhes (Paciente / Medicamento)';
+        btnToggleOptional.textContent = '+ Adicionar detalhes (Paciente / Medicamento / Horário)';
         btnToggleOptional.setAttribute('aria-expanded', 'false');
 
         // Clear validations & hide results

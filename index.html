@@ -136,7 +136,7 @@
                 <!-- Optional Treatment Info -->
                 <div class="optional-info-toggle">
                     <button type="button" id="btn-toggle-optional" class="toggle-link" aria-expanded="false" aria-controls="optional-info-fields">
-                        + Adicionar detalhes (Paciente / Medicamento)
+                        + Adicionar detalhes (Paciente / Medicamento / Horário)
                     </button>
                 </div>
                 
@@ -146,9 +146,15 @@
                             <label for="patient-name" class="sub-label">Nome do Paciente</label>
                             <input type="text" id="patient-name" placeholder="Ex: João da Silva" class="text-input" autocomplete="off">
                         </div>
+                    </div>
+                    <div class="form-row" style="margin-top: 0.75rem;">
                         <div class="form-group-sub">
                             <label for="medication-name" class="sub-label">Nome do Medicamento</label>
                             <input type="text" id="medication-name" placeholder="Ex: Amoxicilina 500mg" class="text-input" autocomplete="off">
+                        </div>
+                        <div class="form-group-sub">
+                            <label for="medication-interval" class="sub-label">De quantas em quantas horas</label>
+                            <input type="number" id="medication-interval" min="1" placeholder="Ex: 8" class="text-input" autocomplete="off">
                         </div>
                     </div>
                 </div>
