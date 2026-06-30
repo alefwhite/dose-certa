@@ -178,9 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Update internal state
             selectedFraction = parseFloat(btn.getAttribute('data-value'));
-
-            // Auto-calculate on change
-            calculateDose();
         });
     });
 
@@ -191,12 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
     durMinusBtn.addEventListener('click', () => updateStepperValue(durInput, -1, 1, 365));
     durPlusBtn.addEventListener('click', () => updateStepperValue(durInput, 1, 1, 365));
 
-    // 3. Inputs Change/Typing handlers (Live calculation)
+    // 3. Inputs Change/Typing handlers (Live validation, no auto-calculation)
     [freqInput, durInput].forEach(input => {
-        input.addEventListener('input', () => {
-            calculateDose();
-        });
-        
         input.addEventListener('blur', () => {
             // Force integer values on blur
             let val = parseInt(input.value, 10);
@@ -210,13 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 input.value = val;
             }
-            calculateDose();
-        });
-    });
-
-    [patientInput, medicationInput].forEach(input => {
-        input.addEventListener('input', () => {
-            calculateDose();
         });
     });
 
@@ -308,6 +294,4 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Run initial calculation on page load
-    calculateDose();
 });
