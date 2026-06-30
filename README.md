@@ -1,6 +1,6 @@
 # 💊 Dose Certa - Calculadora de Dosagem de Medicamentos
 
-**Dose Certa** é uma aplicação web moderna e responsiva desenvolvida em HTML, CSS e JavaScript vanilla, projetada para auxiliar pacientes no cálculo preciso da quantidade de comprimidos necessária para um tratamento médico. Com um design minimalista baseado em princípios de *glassmorphism* e acessibilidade, a aplicação calcula desde a dose exata (em frações) até o número de embalagens inteiras necessárias para completar o ciclo de tratamento.
+**Dose Certa** é uma aplicação web moderna e responsiva desenvolvida em HTML, CSS e JavaScript vanilla, projetada para auxiliar pacientes (e tutores de pets!) no cálculo preciso da quantidade de comprimidos necessária para um tratamento médico. Com um design minimalista baseado em princípios de *glassmorphism* e acessibilidade, a aplicação calcula desde a dose exata (em frações) até o número de embalagens inteiras necessárias para completar o ciclo de tratamento.
 
 🔗 **Acesse a aplicação online:** [https://alefwhite.github.io/dose-certa/](https://alefwhite.github.io/dose-certa/)
 
@@ -9,34 +9,36 @@
 ## ✨ Principais Funcionalidades
 
 - **Cálculo Preciso de Dosagem**
-  - Insira a fração do comprimido (1, 3/4, 1/2, 1/4)
-  - Defina a frequência de ingestão (ex: 3 vezes ao dia)
-  - Informe a duração do tratamento (ex: 10 dias)
+  - Selecione a fração do comprimido (Inteiro, 3/4, Metade ou 1/4) com preview dinâmico em SVG.
+  - Defina a duração do tratamento (ex: 7 dias, 15 dias).
+
+- **Esquema de Frequência Dinâmico (Novidade!)**
+  - Escolha entre esquemas predefinidos: **1x ao dia (Dose Única)**, **2x ao dia (Manhã/Noite)** ou **Por intervalo (De X em X horas)**.
+  - O cálculo da frequência diária é feito de forma automática ao informar o intervalo de horas (ex: de 8 em 8 horas calcula 3x ao dia).
+  - Permite controle manual livre mudando o esquema dinamicamente para **Personalizado** se o usuário interagir com o stepper de frequência.
+
+- **Sugestão de Horário de Início e Cronograma 24h (Novidade!)**
+  - Defina a hora da primeira dose.
+  - O sistema calcula e exibe em tempo real o cronograma estimado das tomadas nas primeiras 24 horas.
+  - **Detector de Madrugada (🌙)**: Horários calculados no período noturno (das 23h às 6h) são destacados com coloração especial e ícone de lua, alertando o usuário para mudar o início caso queira evitar tomadas na madrugada.
+
+- **Tipo de Paciente: Pessoa ou Pet (Novidade!)**
+  - Permite classificar o paciente como **Humano (👤)** ou **Pet (🐾)**.
+  - Atualiza automaticamente os emojis, rótulos e formatação das informações na tela, no PDF e no WhatsApp.
 
 - **Cálculo Automático de Embalagens**
-  - Calcula automaticamente a quantidade exata de comprimidos necessários
-  - Arredonda para cima, mostrando quantos comprimidos inteiros comprar
+  - Calcula a quantidade exata necessária de comprimidos.
+  - Exibe a quantidade arredondada para comprimidos inteiros a serem comprados para garantir a dosagem fracionada.
 
-- **Interface Intuitiva (Glassmorphism)**
-  - Design limpo com fundo gradiente decorativo
-  - Card central em vidro com efeito *blur*
-  - Paleta de cores frias (azul e verde menta)
-
-- **Compatibilidade Total**
-  - Design 100% responsivo para celular, tablet e desktop
-  - Otimizado para toque (mobile) e clique (desktop)
-  - Modo de impressão profissional para prescrições
+- **Interface Glassmorphism & Compatibilidade**
+  - Design premium e minimalista.
+  - Layout totalmente responsivo (mobile, tablet e desktop).
+  - Compartilhamento de resumo estruturado no WhatsApp com um único clique.
+  - Impressão profissional adaptada para PDF (ocultando formulários e botões desnecessários).
 
 - **Acessibilidade (A11y)**
-  - ARIA labels em todos os elementos interativos
-  - Foco visual claro em botões e campos
-  - Rádio buttons para seleção de fração
-  - Suporte a leitores de tela
-
-- **Opcional: Identificação do Tratamento**
-  - Campos opcionais para nome do paciente e medicamento
-  - Exibidos apenas se preenchidos
-  - Incluídos automaticamente no resumo de impressão
+  - Atributos ARIA em botões e seletores interativos.
+  - Navegação via teclado e compatibilidade com leitores de tela.
 
 ---
 
@@ -46,24 +48,19 @@
 
 | Cor | Uso | Hex Code |
 |-----|-----|----------|
-| **Primary** | Botões, links, foco | `#0ea5e9` (Sky Blue) |
-| **Secondary** | Destaques, ícones | `#10b981` (Emerald Green) |
-| **Accent** | Input ativa | `#6366f1` (Indigo) |
-| **Background Gradient** | Fundo decorativo | `#f0f9ff` → `#ecfdf5` |
-| **Glass Card** | Card principal | `rgba(255, 255, 255, 0.7)` |
-| **Text Main** | Textos principais | `#1e293b` |
-| **Text Muted** | Textos secundários | `#64748b` |
+| **Primary** | Botões, links, focos ativos | `#0ea5e9` (Sky Blue) |
+| **Secondary** | Sucesso, status ativo normal | `#10b981` (Emerald Green) |
+| **Accent** | Destaques adicionais, inputs ativos | `#6366f1` (Indigo) |
+| **Warning / Night** | Alertas, doses de madrugada | `#d97706` / `#fffbeb` (Amber) |
+| **Background Gradient** | Fundo dinâmico decorativo | `#f0f9ff` → `#ecfdf5` |
+| **Glass Card** | Card central principal | `rgba(255, 255, 255, 0.7)` |
+| **Text Main** | Textos e rótulos principais | `#1e293b` |
+| **Text Muted** | Textos de ajuda secundários | `#64748b` |
 
 ### Tipografia
 
-- **Títulos**: 'Outfit' - 700-800 (moderno e impactante)
+- **Títulos**: 'Outfit' - 500-800 (moderno e impactante)
 - **Corpo**: 'Inter' - 400-600 (legível e limpo)
-
-### Dimensões e Espaçamento
-
-- **Card Radius**: `24px`
-- **Spacing**: Base de `8px` (1rem)
-- **Transition**: `all 0.3s cubic-bezier(0.4, 0, 0.2, 1)` (suave)
 
 ---
 
@@ -72,120 +69,77 @@
 ### Estrutura de Arquivos
 
 ```
-
-
 dose-certa/
 ├── index.html              # Estrutura HTML semântica
-├── style.css               # Estilos CSS (inclui design system)
-└── script.js               # Lógica JavaScriptVanilla
-
+├── style.css               # Estilos CSS (inclui design system e print layouts)
+└── script.js               # Lógica JavaScript Vanilla
 ```
 
-### Componentes do HTML
+### Componentes de Interface
 
-1. **Background Decorations**: Blobs decorativos com animação de flutuação.
-2. **Header**: Logo SVG animado, título e subtítulo.
-3. **Calculator Card**: Contêiner principal com design glassmorphism.
-   - **Fraction Picker**: Botões interativos com visualização SVG de frações.
-   - **Input Controls**: Stepper buttons e campos de texto.
-   - **Optional Details**: Seção colapsável para informações opcionais.
-4. **Results Panel**: Exibição dos resultados calculados.
-   - **Print Only Summary**: Seção oculta na UI mas visível na impressão.
-   - **Print Buttons**: Exportação PDF (nativo) e compartilhamento.
+1. **Background Decorations**: Blobs desfocados flutuantes que criam sensação de profundidade.
+2. **Calculator Form**:
+   - **Fraction Grid**: Botões interativos com SVGs ilustrativos das partes dos comprimidos.
+   - **Schedule Selector**: Botões segmentados modernos para a escolha de horário do medicamento.
+   - **Time Suggester**: Campo de hora de início e container de pré-visualização das tomadas calculadas.
+   - **Details Accordion**: Seção expansível para informações adicionais de identificação do paciente e medicamento.
+3. **Results Content**:
+   - **Rounded Value**: Indicador em destaque do número de comprimidos inteiros a adquirir.
+   - **24h Recommended Schedule**: Tabela visual com os horários e avisos de madrugada para conforto do paciente.
+   - **Action Bar**: Atalhos para salvar em PDF (impressão profissional) ou enviar via WhatsApp.
 
 ---
 
 ## 🔌 Lógica de Execução
 
-### Seleção de Fração
-Os botões de fração utilizam um *custom radio group* que:
-1. Atualiza a variável `selectedFraction` no JavaScript
-2. Altera estilos CSS para indicar seleção
-3. Atualiza o visual dos SVGs para mostrar a fração correta
+### Automação de Frequência
+Quando o usuário seleciona as opções automáticas:
+- **1x ao dia**: Frequência é definida para `1`.
+- **2x ao dia**: Frequência é definida para `2`.
+- **Por intervalo**: Libera o input numérico. Se o usuário informa $X$ horas, a frequência é calculada por $F = \text{Math.round}(24 / X)$, limitando a frequência final entre `1` e `24` vezes ao dia.
+- Qualquer alteração manual no stepper de frequência desativa o cálculo dinâmico e muda o seletor para **Personalizado**.
 
-### Cálculo Automático
-Ao clicar em **Calcular**: 
-1. Obtém valores dos inputs
-2. Calcula dose exata: `doseExata = (selectedFraction * frequencia * duracao) / 1`
-3. Calcula compra: `totalRounded = ceil(doseExata)`
-4. Exibe resultados no painel
+### Cronograma de Tomadas
+A lógica lê a hora inicial (`HH:MM`) e calcula os instantes de tomadas com base no intervalo de horas (derivado da frequência ou diretamente informado no campo de horas). As tomadas que possuem a hora pertencente à faixa das 23h às 5h são marcadas com a classe CSS `.night-dose` para alertar o usuário sobre possíveis perturbações do sono.
 
-### Impressão Responsiva
-O arquivo `style.css` contém media queries para:
-- Ocultar elementos não essenciais na impressão (background, botões de ação)
-- Exibir summary textual com nome do paciente/medicamento
-- Converter inputs para texto estático
-
-### Export PDF Nativo
-Ao clicar em **Salvar/Exportar**:
-- O app não gera PDF via biblioteca
-- Usa **Window Print API** para abrir o diálogo nativo do navegador
-- É totalmente compatível com todas as versões modernas de navegadores
+### Tipo de Paciente
+O botão ativa a variável de estado `selectedPatientType` (`human` ou `pet`). Na rotina de formatação de string (usada no WhatsApp e na impressão):
+- Se `human`: Utiliza-se a legenda *"Paciente"* e o emoji `👤`.
+- Se `pet`: Utiliza-se a legenda *"Paciente (Pet)"* e o emoji `🐾`.
 
 ---
 
 ## ⚡ Como Usar
 
-1. Clone o repositório
-2. Abra o arquivo `index.html` em qualquer navegador web moderno
-3. Preencha as informações necessárias
-4. Clique em **Calcular**
-5. Visualize os resultados e opção de exportar
+1. Clone o repositório ou baixe os arquivos.
+2. Abra o arquivo `index.html` em qualquer navegador web moderno.
+3. Insira as informações do tratamento.
+4. Visualize os horários projetados e faça os ajustes necessários no horário de início.
+5. Clique em **Calcular** para obter os totais.
+6. Compartilhe o resultado ou gere o PDF de prescrição.
 
-### Exemplo de Uso
+### Exemplo de Uso (Pet)
 
-**Paciente**: Maria Silva
-**Medicamento**: Losartana
-**Fração**: Metade (1/2)
-**Frequência**: 2 vezes ao dia
-**Duração**: 15 dias
+- **Paciente**: Rex (🐾 Pet)
+- **Medicamento**: Prednisona 20mg
+- **Fração**: Metade (1/2)
+- **Horário de início**: 08:00
+- **Esquema de frequência**: Por intervalo (De 12 em 12 horas) -> Frequência sugerida: 2 vezes ao dia
+- **Duração**: 10 dias
 
-**Resultado**:
-- Dose exata: 15 comprimidos
-- Para comprar: 15 comprimidos inteiros
-
----
-
-## 📱 Otimização Mobile
-
-- **Touch-Friendly**: Botões grandes (`> 44px` touch target)
-- **Spacing**: Margens generosas para evitar toques acidentais
-- **Grid Responsivo**: 2 colunas no desktop, 1 coluna no mobile
-- **Visual Feedback**: Animações suaves e estados `:active` claros
-
-## 💻 Otimização Desktop
-
-- **Grid Expandido**: 2 colunas para seleção de fração
-- **Layout**: Card central alinhado horizontalmente
-- **Tipografia**: Títulos maiores para impacto
-- **Micro-interações**: Hover states detalhados
-
-## 🎯 Acessibilidade (A11y)
-
-- **Controle de Foco**: Sempre visível e claro
-- **Semântica HTML5**: Uso de `<section>`, `<header>`, `<main>`
-- **ARIA Attributes**: `role="radiogroup"`, `aria-checked`, `aria-expanded`
-- **Visuais**: Alto contraste de texto e estados ativos
-- **Print**: `@media print` para documentos acessíveis
+**Resultados Gerados**:
+- **Cronograma de Doses (Próximas 24h)**: `08:00`, `20:00` (Status: diurno confortável ✓)
+- **Total Exato**: 10 comprimidos
+- **Comprar**: 10 comprimidos inteiros
+- **WhatsApp**: Envia a mensagem formatada contendo `🐾 Paciente (Pet): Rex` e os horários das tomadas.
 
 ---
 
-## 🧪 Testes Recomendados
+## 🧪 Casos de Testes Executados
 
-### Testes Funcionais
-- [ ] Selecionar cada fração e calcular
-- [ ] Preencher e limpar campos opcionais
-- [ ] Testar com valores extremos (ex: 100 dias)
-- [ ] Verificar cálculo decimal (ex: 0.75 × 2 × 5)
-
-### Testes de Responsividade
-- [ ] Visualizar em celular (1080×1920)
-- [ ] Visualizar em tablet (1024×768)
-- [ ] Visualizar em desktop (1920×1080)
-- [ ] Redimensionar janela do navegador
-
-### Testes de Acessibilidade
-- [ ] Navegar com teclado (Tab, Enter, Space)
-- [ ] Usar leitor de tela (VoiceOver, NVDA)
-- [ ] Verificar contraste de cores
-- [ ] Testar com zoom do navegador
+- [x] Selecionar tipo de paciente Pet, digitar o nome e conferir o ícone `🐾` no WhatsApp e PDF.
+- [x] Inserir intervalo de 8 horas e conferir se calcula frequência diária igual a 3.
+- [x] Iniciar tratamento de 8 em 8 horas às 08:00 e verificar se exibe `08:00`, `16:00` e `00:00` (esta última com 🌙).
+- [x] Modificar o horário de início para sumir com o ícone de madrugada (ex: iniciando às 06:00, tomadas às `06:00`, `14:00`, `22:00`).
+- [x] Ajustar a frequência manualmente com o botão `+` e garantir que o esquema alterne para **Personalizado** na mesma hora.
+- [x] Testar a funcionalidade de limpeza do formulário para verificar se os estados padrão (Humano, 1x ao dia, 08:00) retornam com sucesso.
