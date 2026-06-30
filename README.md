@@ -2,6 +2,8 @@
 
 **Dose Certa** é uma aplicação web moderna e responsiva desenvolvida em HTML, CSS e JavaScript vanilla, projetada para auxiliar pacientes no cálculo preciso da quantidade de comprimidos necessária para um tratamento médico. Com um design minimalista baseado em princípios de *glassmorphism* e acessibilidade, a aplicação calcula desde a dose exata (em frações) até o número de embalagens inteiras necessárias para completar o ciclo de tratamento.
 
+🔗 **Acesse a aplicação online:** [https://alefwhite.github.io/dose-certa/](https://alefwhite.github.io/dose-certa/)
+
 ---
 
 ## ✨ Principais Funcionalidades
